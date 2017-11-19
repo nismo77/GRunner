@@ -29,5 +29,7 @@ public class GRunner extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+		
+		// tcguyjadsadsadsadsadsa
 	}
 }
