@@ -16,48 +16,18 @@ public class GRunner extends ApplicationAdapter {
 	
 	public int ani_x = 100;
 
-	TextureRegion crr_frame;
-	TextureRegion[][] tmp;
-	TextureRegion[] ani_frames;
 
 	private float ani_time;
 
 	SpriteBatch batch;
 	Texture animation_sheet;
-	Animation<TextureRegion> animation;
+	Animation animation;
 
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 
-		// load animation sheet
-		animation_sheet = new Texture(Gdx.files.internal("sprite_animation4.png"));
-
-		// split frames from sheet into 2D (split method returns only 2D array)
-		tmp = TextureRegion.split(animation_sheet, // <-- the sheet
-				animation_sheet.getWidth() / TEX_COL, // <-- width of each frame
-				animation_sheet.getHeight() / TEX_ROW); // <-- height of each frame
-
-		System.out.printf("sheet_width = %d\n," + "sheet_heigth = %d\n", animation_sheet.getWidth() / TEX_ROW,
-				animation_sheet.getHeight() / TEX_COL);
-
-		// load splitted frames into 1D array (Animation constructor requires 1D array.
-		// huh...)
-		ani_frames = new TextureRegion[TEX_ROW * TEX_COL];
-		System.out.println("TEX_ROW * TEX_COL = " + ani_frames.length);
-		System.out.println("tmp size=" + tmp.length);
-
-		int index = 0;
-		for (int i = 0; i < TEX_ROW; i++) {
-			for (int j = 0; j < TEX_COL; j++) {
-				System.out.printf("ani_frames[%d] = tmp[%d][%d]\n", index, i, j);
-				ani_frames[index++] = tmp[i][j];
-			}
-		}
-
-		// initialize Animation constructor with frame interval and frames
-		animation = new Animation<TextureRegion>(0.030f, ani_frames);
-
+		
 		ani_time = 0.0f;
 	}
 
