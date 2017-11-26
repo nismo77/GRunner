@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -23,7 +22,10 @@ public class GRunner extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Animation<TextureRegion> anim;
 	private TextureAtlas runnerAtlas;
-	private Texture currentFrame;
+	private TextureRegion currentFrame;
+	private Object[] frameRegion;
+	private TextureRegion lastFrame;
+	
 
 	@Override
 	public void create() {
@@ -31,7 +33,9 @@ public class GRunner extends ApplicationAdapter {
 		ani_time = 0.0f;
 		runnerAtlas = new TextureAtlas(Gdx.files.internal("runner_pack.pack"));
 		anim = new Animation<TextureRegion>(1/30f, runnerAtlas.getRegions());
-		
+		frameRegion = anim.getKeyFrames();  // <-- get all frames into 1D array
+		lastFrame = (TextureRegion) frameRegion[0];
+
 		
 	}
 
@@ -42,7 +46,16 @@ public class GRunner extends ApplicationAdapter {
 		
 		batch.begin();
 		ani_time += Gdx.graphics.getDeltaTime();
-		batch.draw( anim.getKeyFrame(ani_time, true), ani_x, 100);
+
+		if(start_ani) {
+			currentFrame = anim.getKeyFrame(ani_time, true);
+			lastFrame = currentFrame;
+		}
+		else {
+			currentFrame = lastFrame;
+
+		}
+		batch.draw( currentFrame, ani_x, 100);
 		batch.end();
 		
 		logic();
@@ -70,6 +83,7 @@ public class GRunner extends ApplicationAdapter {
 		}
 		else {
 			start_ani = false;
+			
 		}
 	}
 }
