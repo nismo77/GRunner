@@ -92,7 +92,10 @@ public class GRunner extends ApplicationAdapter {
 		
 		if( Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			start_ani = true;
-			ani_x += 100 * Gdx.graphics.getDeltaTime();
+			ani_x += 200 * Gdx.graphics.getDeltaTime();
+			if( ani_x > Gdx.graphics.getWidth() ) {
+				ani_x = -30;
+			}
 		}
 		else {
 			start_ani = false;
