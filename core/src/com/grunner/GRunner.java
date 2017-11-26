@@ -72,7 +72,7 @@ public class GRunner extends ApplicationAdapter {
 			crr_frame = animation.getKeyFrame(ani_time, true);
 		}
 		else {
-			crr_frame = ani_frames[10];
+			crr_frame = ani_frames[animation.getKeyFrameIndex(ani_time)];
 		}
 		batch.draw(crr_frame, ani_x, 100);
 		batch.end();
@@ -93,6 +93,9 @@ public class GRunner extends ApplicationAdapter {
 		if( Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			start_ani = true;
 			ani_x += 100 * Gdx.graphics.getDeltaTime();
+			if( ani_x > Gdx.graphics.getWidth()) {
+				ani_x = -30;
+			}
 		}
 		else {
 			start_ani = false;
